@@ -1,4 +1,5 @@
 
+# Part 0
 # Part B:  Fundementals of Web Apps
 
 ## Client - Server relations:
@@ -48,3 +49,33 @@ idempotent: calling multiple times has the same effect on the database as callin
 to manipulate the HTML reference the document which is the top most node of the DOM tree
 
 AJAX (Asynchronous JavaScript and XML): appoach that enabled the fetching of content to web pages using JS included within the HTML, without the need to rerender the page.
+
+Async here means that the browser can keep running while waiting for the server. 
+
+# Part 1
+# Part a: Introductino to React
+
+The content of a React component usually needs to contain one root element.
+Components are regular JavaScript functions, but their names must start with a capital letter or they won't work.
+
+JSX: code that is written like HTML, but is actually JavaScript under the hood! Allows for embedding markup inside JavaScript.
+
+React lets you create components, reusable UI elements for your app.
+
+React components are regular JavaScript functions except:
+
+Their names always begin with a capital letter.
+They return JSX markup.
+
+People often use default exports if the file exports only one component, and use named exports if it exports multiple components and values. 
+
+### JSX
+
+- Keeping a button's rendering logic and markup together ensures that they stay in sync with each other on every edit.
+
+- Return a single root element. To return multiple elements from a component, wrap them with a single parent tag such as div, fragment(<>) or section.
+
+- This is so because JSX elements are treated as objects and only one object can be returned from a function.
+
+### Props
+If the value of a prop is achieved using JS it must be wrapped in curly braces.
