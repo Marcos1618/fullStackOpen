@@ -79,3 +79,21 @@ People often use default exports if the file exports only one component, and use
 
 ### Props
 If the value of a prop is achieved using JS it must be wrapped in curly braces.
+
+Props get passed to children from parents in the form "prop = {propVal}"
+
+This creates children text nodes and is incorrect:
+That will place text between tags. 
+<Content> 
+  part1 = {part1} exercises1 = {exercises1}
+  part2 = {part2} exercises2 = {exercises2}
+  part3 = {part3} exercises3 = {exercises3}
+</Content>
+
+
+The following is correct:
+This passes the prop part1 to the component. 
+<Content part1={part1} />
+
+
+You do not have to specify each var that you expecting when taking in props. You can simply just include the word props in the parameters and it will automatically make an object with key value pairs for as many arguments that are passed in. 
