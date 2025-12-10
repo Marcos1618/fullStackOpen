@@ -97,3 +97,120 @@ This passes the prop part1 to the component.
 
 
 You do not have to specify each var that you expecting when taking in props. You can simply just include the word props in the parameters and it will automatically make an object with key value pairs for as many arguments that are passed in. 
+
+### JavaScript
+let and const are block scoped
+var is function scoped
+
+const prevents reassignment of the data value. However the contents of the data value can be changed such as elements of a list of properties of an object.
+
+Object Literals
+
+There are a few different ways of defining objects in JavaScript. One very common method is using object literals, which happens by listing its properties within braces:
+
+const object1 = {
+  name: 'Arto Hellas',
+  age: 35,
+  education: 'PhD',
+}
+
+inside JSX you must use curly braces {} to insert JavaScript
+
+### function declaration: are fully hoisted and can be called before they appear in the code.
+
+greet()  // works
+
+function greet() {
+  console.log("Hello")
+}
+
+greet()   // ❌ Error: greet is not a function
+
+const greet = function() {
+  console.log("Hello")
+}
+
+### function expressions
+
+greet()   // ❌ Error: greet is not a function
+
+const greet = function() {
+  console.log("Hello")
+}
+### terms
+using, containing, or denoting expressions in a way that is natural to a native speaker
+
+# Part C: Component state, event handlers
+
+Destructuring syntax is a JS syntax that makes it possible to unpack values from arrays, or properties from objects, into distinct variables.
+
+{} is used to destructure objects and [] is used to destructure arrays.
+
+function Component = (props) => {
+    name = prop.name
+    age = prop.age
+}
+
+You can destructure within the parameters or within the function.
+
+### State
+
+Local variables don’t persist between renders. When React renders this component a second time, it renders it from scratch—it doesn’t consider any changes to the local variables.
+Changes to local variables won’t trigger renders. React doesn’t realize it needs to render the component again with the new data.
+
+When a state modifying function such as setCounter is called, React re-renders the component its in which means that the function body of the component is re-executed. 
+
+When the re-render occurs within a given component the entire component is replaced with a new version. So if you see that the current state was set to const yet it is changing value you must remember that it is an entirely new instance / frame assigning const for the first time with the prev as reference. 
+
+() => {
+  const [ counter, setCounter ] = useState(0)
+
+  setTimeout(
+    () => setCounter(counter + 1),
+    1000
+  )
+
+  return (
+    <div>{counter}</div>
+  )
+}
+
+The value passed to useState(initialValue) is only used on the first render
+
+Think of useState(0) as:
+
+“Give me the state stored for this component.
+If the component does not have stored state yet, use 0.”
+
+When setting a buttons onClick behavior in attributes you must only pass in functions or references to functions. Passing a function call will not work and break the app. In such as situation where a function call is used React will render tsx up until the function call and execute it immediately before finishing its current render (reading the rest of the code). This updates state in the middle of a render which is a no-no in React and causes an infinte loop of renders preventing the user from interacting with the page. 
+
+A component must have a pure render function — it should only calculate what the UI looks like, not cause updates. Updating state inside render is like updating the blueprint while you're reading it.
+
+# Part D: A more complex state
+
+Object Spread
+
+{ ...clicks } creates a new object that has copies of all of the properties of the clicks object. When we specify a particular property - e.g. right in { ...clicks, right: 1 }, the value of the right property in the new object will be 1.
+
+### Async vs Sync
+Sync
+
+One thing happens at a time.
+Each line waits for the previous line to finish before running.
+
+Think: standing in a single-file line.
+
+Async
+
+Multiple things can be in progress at once without blocking the main thread.
+
+Think: ordering food and getting a buzzer. You can walk around while waiting.
+
+The code starts an action but doesn’t wait for it—
+it moves on, and the result comes later (via callback, promise, or async/await).
+
+ Sync is in time. Async is out of time. And by time I can also say sync = in order and async = out of order. So it's the same meaning.
+
+ Syntax	Meaning
+() => { ... }	Function body with statements
+() => ( ... )	Implicit return of expression/JSX
