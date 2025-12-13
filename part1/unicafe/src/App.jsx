@@ -47,12 +47,12 @@ const Statistics = ({good, neutral, bad}) => {
   if (good > 0 || neutral > 0 || bad > 0){ 
     return  (
       <div>
-        <Display text="Good " value={good}></Display>
-        <Display text="Neutral " value={neutral}></Display>
-        <Display text="Bad " value={bad}></Display>
-        <Display text="All " value={good+neutral+bad}></Display>
-        <Display text="Average " value={(good+(bad*-1))/(good+neutral+bad)}></Display>
-        <Display text="Positive " value={((good)/(good+neutral+bad))*100} unit="%"></Display>
+        <StatisticLine text="Good " value={good}></StatisticLine>
+        <StatisticLine text="Neutral " value={neutral}></StatisticLine>
+        <StatisticLine text="Bad " value={bad}></StatisticLine>
+        <StatisticLine text="All  " value={good + bad + neutral}></StatisticLine>
+        <StatisticLine text="Average " value={(((good*1)+(bad*-1))/(good+neutral+bad))}></StatisticLine>
+        <StatisticLine text="Percentage " value={((good)/(good+neutral+bad))*100} unit="%"></StatisticLine>
       </div>
     )
   }
@@ -60,5 +60,9 @@ const Statistics = ({good, neutral, bad}) => {
     return <p>No feedback given</p>
   }
 }
+
+const StatisticLine = ({text, value, unit}) => (
+  <Display text={text} value={value} unit={unit}></Display>
+)
 
 export default App
