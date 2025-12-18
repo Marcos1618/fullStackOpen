@@ -76,7 +76,7 @@ const Table = ({good, neutral, bad}) => (
           <TableRow text="Average " value={(((good*1)+(bad*-1))/(good+neutral+bad))}></TableRow>
           <TableRow text="Percentage " value={((good)/(good+neutral+bad))*100} unit="%"></TableRow>
         </tbody>
-      </table>
+    </table>
 )
 
 const TableRow = ({text, value, unit}) => (

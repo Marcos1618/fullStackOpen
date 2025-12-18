@@ -214,3 +214,16 @@ it moves on, and the result comes later (via callback, promise, or async/await).
  Syntax	Meaning
 () => { ... }	Function body with statements
 () => ( ... )	Implicit return of expression/JSX
+
+### * Exercises
+
+UI is derived from data
+
+We do not store the most-voted anecdote in state
+
+We compute it during render
+
+This is very important React thinking:
+
+If something can be derived from state, don’t put it in state.
+
