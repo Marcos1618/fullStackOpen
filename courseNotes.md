@@ -55,6 +55,9 @@ Async here means that the browser can keep running while waiting for the server.
 # Part 1
 # Part a: Introductino to React
 
+creating a React app:
+npm create vite@latest
+
 The content of a React component usually needs to contain one root element.
 Components are regular JavaScript functions, but their names must start with a capital letter or they won't work.
 
@@ -227,3 +230,9 @@ This is very important React thinking:
 
 If something can be derived from state, don’t put it in state.
 
+# Part 2
+
+## Rendering a collection, modules
+
+### Higher order function:
+function that take other functions as argument
