@@ -141,7 +141,12 @@ const greet = function() {
   console.log("Hello")
 }
 ### terms
-using, containing, or denoting expressions in a way that is natural to a native speaker
+declaration - to make completely clear
+de - thoroughly complete
+
+expression - to press out
+from latin expressio - a pressing out, representation
+ex - out
 
 # Part C: Component state, event handlers
 
@@ -236,3 +241,7 @@ If something can be derived from state, don’t put it in state.
 
 ### Higher order function:
 function that take other functions as argument
+
+# Forms 
+
+## Saving the notes in the component state
