@@ -25,12 +25,12 @@ let persons = [
     }
 ]
 
-console.log(`persons: ${persons}`)
+console.log(`persons: `,persons)
 
 
 app.get('/api/persons', (request, response) => {
     response.json(persons)
-    console.log(`persons: ${persons}`)
+    console.log(`persons: `, persons)
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -63,12 +63,24 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
     const id = Math.floor(Math.random() * 1000)
-    const person = request.body 
+    const body = request.body 
 
-    person.id = id
-    persons = persons.concat(person)
-    console.log(person)
-    response.json(person)
+    if (!body.name || !body.number) {
+        return response.status(400).json({ error: "must provide name and number" })
+    }
+
+    else if (persons.find((p => p.name === body.name))) {
+        return response.status(400).json( {error: "name must be unique" })
+    }
+
+    const newPerson = {
+        "id": id.toString(),
+        "name": body.name,
+        "number": body.number,
+    }
+    persons = persons.concat(newPerson)
+    console.log(newPerson)
+    response.json(newPerson)
 })
 
 const PORT = 3001
