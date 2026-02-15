@@ -2,6 +2,15 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
+const morgan = require('morgan')
+morgan.token('postedPerson', (req) => {
+    return JSON.stringify(req.body)
+    })
+app.use(morgan(':method :url :status :res[content-length] = :response-time ms :postedPerson'), )
+
+{/* need to access the data from the request and include it in the logger output*/}
+{/* morgan does not expose body by default so must create custom token for body */}
+
 let persons = [
     { 
       "id": "1",
@@ -79,7 +88,6 @@ app.post('/api/persons', (request, response) => {
         "number": body.number,
     }
     persons = persons.concat(newPerson)
-    console.log(newPerson)
     response.json(newPerson)
 })
 
