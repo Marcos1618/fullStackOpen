@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
+
 const morgan = require('morgan')
 morgan.token('postedPerson', (req) => {
     return JSON.stringify(req.body)
@@ -10,6 +11,8 @@ app.use(morgan(':method :url :status :res[content-length] = :response-time ms :p
 
 {/* need to access the data from the request and include it in the logger output*/}
 {/* morgan does not expose body by default so must create custom token for body */}
+
+const baseURL = '/api/persons'
 
 let persons = [
     { 
@@ -37,7 +40,7 @@ let persons = [
 console.log(`persons: `,persons)
 
 
-app.get('/api/persons', (request, response) => {
+app.get(baseURL, (request, response) => {
     response.json(persons)
     console.log(`persons: `, persons)
 })
@@ -91,7 +94,7 @@ app.post('/api/persons', (request, response) => {
     response.json(newPerson)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
 })
