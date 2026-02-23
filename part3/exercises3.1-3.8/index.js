@@ -4,6 +4,10 @@ app.use(express.json())
 
 
 const morgan = require('morgan')
+const cors = require('cors')
+
+app.use(cors())
+
 morgan.token('postedPerson', (req) => {
     return JSON.stringify(req.body)
     })
@@ -42,7 +46,6 @@ console.log(`persons: `,persons)
 
 app.get(baseURL, (request, response) => {
     response.json(persons)
-    console.log(`persons: `, persons)
 })
 
 app.get('/api/persons/:id', (request, response) => {
