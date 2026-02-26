@@ -49,6 +49,10 @@ app.get(baseURL, (request, response) => {
     response.json(persons)
 })
 
+app.get('/', (req, res) => {
+  res.send('Phonebook backend is running');
+});
+
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
     const person = persons.find(p => p.id === id)
