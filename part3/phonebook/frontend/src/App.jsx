@@ -66,7 +66,7 @@ const App = () => {
     const newPersons = persons.filter(person => person.id !== id)
     personService
       .remove(id)
-      .then(setPersons(newPersons))
+      .then(() => setPersons(newPersons))
       .then(response => console.log(response))
     }
   }
@@ -83,19 +83,24 @@ const App = () => {
           .then(returnedPerson => {
             setPersons(persons.map(p => p.name === newName ? returnedPerson : p))
             console.log("updated person object " + returnedPerson.name)
+            setMessageStyle(successStyle)
+            setMessage(`${newName} updated with phone number ${newNumber}`)
+
+            setNewName('')
+            setNewNumber('')
+
+            setTimeout(() => setMessage(null), 5000)
             }
+            
           )
           .catch(error => {
+            console.error(error)
             setMessageStyle(errorStyle)
-            setMessage(`${person.name} has already been removed from the server`)
-            }
-          )
+            setMessage(error.response?.data?.error || 'Something went wrong')
+
+            setTimeout(() => setMessage(null), 5000)
+          })
           
-          setMessageStyle(successStyle)
-          setMessage(`${newName} updated with phone number ${newNumber}`)
-          setTimeout(() => {
-            setMessage(null)
-          }, 5000)
       }
     }
     else {
@@ -107,14 +112,22 @@ const App = () => {
         .create(newPerson)
         .then(returnedPerson => {
           setPersons(persons => persons.concat(returnedPerson))
+          setMessageStyle(successStyle)
+          setMessage(`${newPerson.name} was added to the phonebook`)
+          setNewName('')
+          setNewNumber('')
+
+          setTimeout(() => setMessage(null), 5000)
         })
-    setNewName('')
-    setNewNumber('')
-    setMessageStyle(successStyle)
-    setMessage(`${newPerson.name} was added to the phonebook`)
-    setTimeout(() => {
-      setMessage(null)
-      }, 5000)
+        .catch(error => {
+          console.error(error)
+          setMessageStyle(errorStyle)
+          setMessage(
+            error.response?.data?.error || 'Something went wrong'
+          )
+          
+          setTimeout(() => setMessage(null), 5000)
+        })
     }
   }
 

@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
-    const person = persons.find(p => p.id === id)
+    persons = persons.find(p => p.id === id)
 
     if (person) {
         response.json(person)
@@ -64,17 +64,25 @@ app.post('/api/persons', (request, response) => {
     if (!body.name || !body.number) {
         return response.status(400).json(
             { error: "missing content" }
-    )}
+        )
+    }
 
-    const person = new Person({
-        "name": body.name,
-        "number": body.number,
+    Person.findOne({ name: body.name }).then(existingPerson => {
+        if (existingPerson) {
+            return response.status(400).json(
+                { error: "this phone number already exists as an entry" }
+            )
+        }
+
+        const person = new Person({
+            name: body.name,
+            number: body.number,
+        })
+
+        person.save().then(savedPerson => {
+            response.json(savedPerson)
+        })
     })
-
-    person.save().then(savedPerson => {
-        response.json(savedPerson)
-    })
-
 })
 
 const PORT = process.env.PORT || 3001
