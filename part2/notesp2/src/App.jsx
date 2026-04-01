@@ -10,7 +10,7 @@ const App = (props) => {
   useEffect(() => {
     console.log('effect')
     axios
-      .get('http://localhost:3001/persons')
+      .get('http://localhost:3001/notes')
       .then(response => {
         console.log('promise fulfilled')
         setNotes(response.data)
@@ -37,7 +37,7 @@ const App = (props) => {
   console.log('render', notes.length, 'notes')
 
   const addNote = (event) => {
-    event.preventDefualt()
+    event.preventDefault()
     console.log('button clicked', event.target)
     const noteObject = {
       content: event.target,
