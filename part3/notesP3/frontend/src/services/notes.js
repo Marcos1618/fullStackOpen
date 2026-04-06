@@ -3,6 +3,7 @@ const baseUrl = '/api/notes'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
+  console.log(baseUrl)
   return request.then((response) => response.data)
 }
 
@@ -16,8 +17,14 @@ const update = (id, newObject) => {
   return request.then((response) => response.data)
 }
 
+const remove = (id) => {
+  const request = axios.delete(`${baseUrl}/${id}`)
+  return request.then()
+}
+
 export default {
   getAll,
   create,
   update,
+  remove
 }
