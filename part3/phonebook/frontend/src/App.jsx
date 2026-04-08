@@ -96,6 +96,7 @@ const App = () => {
           .catch(error => {
             console.error(error)
             setMessageStyle(errorStyle)
+            console.log('error from adding entry with existing name')
             setMessage(error.response?.data?.error || 'Something went wrong')
 
             setTimeout(() => setMessage(null), 5000)

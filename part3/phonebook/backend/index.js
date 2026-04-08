@@ -103,6 +103,18 @@ app.post('/api/persons', (request, response) => {
     })
 })
 
+app.put('/api/persons/:id', (request, response, next) => {
+    Person.findById(request.params.id).then(person => {
+        const number = request.body.number
+        person.number = number
+        return response.json(person)
+    })
+    .catch(error => {
+        console.log('error in index put')
+        next(error)
+    })
+})
+
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
