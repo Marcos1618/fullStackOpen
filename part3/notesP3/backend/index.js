@@ -4,6 +4,7 @@ const app = express()
 const mongoose = require('mongoose')
 const Note = require('./models/note')
 
+app.use(express.static('dist'))
 app.use(express.json())
 
 const errorHandler = (error, request, response, next) => {
