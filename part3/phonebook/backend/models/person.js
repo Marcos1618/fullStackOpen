@@ -14,7 +14,11 @@ mongoose.connect(url, { family: 4 })
     })
 
 const personSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        minLength: 5,
+        required: true,
+    },
     number: String,
 })
 
@@ -28,5 +32,7 @@ personSchema.set('toJSON', {
 })
 
 const Person = mongoose.model('Person', personSchema)
+
+
 
 module.exports = Person

@@ -121,7 +121,8 @@ const App = () => {
           setTimeout(() => setMessage(null), 5000)
         })
         .catch(error => {
-          console.error(error)
+          console.error('from catch ', error)
+          console.log(error, error.response)
           setMessageStyle(errorStyle)
           setMessage(
             error.response?.data?.error || 'Something went wrong'

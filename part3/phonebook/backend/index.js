@@ -14,20 +14,20 @@ const errorHandler = (error, request, response, next) => {
 
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformed input' })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message })
     }
-
     next(error)
 }
 
-app.use(errorHandler)
 
 morgan.token('postedPerson', (req) => {
     return JSON.stringify(req.body)
-    })
-app.use(morgan(':method :url :status :res[content-length] = :response-time ms :postedPerson'), )
+})
+app.use(morgan(':method :url :status :res[content-length] = :response-time ms :postedPerson'))
 
-{/* need to access the data from the request and include it in the logger output*/}
-{/* morgan does not expose body by default so must create custom token for body */}
+// need to access the data from the request and include it in the logger output
+// morgan does not expose body by default so must create custom token for body
 
 const baseURL = '/api/persons'
 
@@ -76,7 +76,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const body = request.body
 
     if (!body.name || !body.number) {
@@ -100,22 +100,38 @@ app.post('/api/persons', (request, response) => {
         person.save().then(savedPerson => {
             response.json(savedPerson)
         })
+        .catch(error => next(error))
     })
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
-    Person.findById(request.params.id).then(person => {
-        const number = request.body.number
-        person.number = number
-        return response.json(person)
-    })
-    .catch(error => {
-        console.log('error in index put')
-        next(error)
-    })
+    const body = request.body
+    const updatedPerson = {
+        name: body.name,
+        number: body.number,
+    }
+    Person.findByIdAndUpdate(
+        request.params.id,
+        updatedPerson,
+        {returnDocument: 'after', runValidators: true, context: 'query'}
+    )
+        .then(result => {
+            if (result) {
+                return response.json(result)
+            } else {
+                return response.status(404).end()
+            }
+        })
+        .catch(error => next(error))
 })
 
 const PORT = process.env.PORT || 3001
+
+app.use((req, res) => {
+  res.status(404).send({ error: 'unknown endpoint' })
+})
+
+app.use(errorHandler)
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
 })
