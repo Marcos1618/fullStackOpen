@@ -72,7 +72,6 @@ const App = () => {
   }
 
   const addPerson = (event) => {
-    console.log(newNumber)
     event.preventDefault()
     const person = persons.find(person => person.name === newName)
 
